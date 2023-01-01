@@ -1,5 +1,16 @@
 import React from "react";
-import { Container, Box, Text } from "@chakra-ui/react";
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Container,
+  Box,
+  Text,
+} from "@chakra-ui/react";
+import Login from "../components/authentication/Login";
+import Signup from "../components/authentication/Signup";
 
 const Homepage = () => {
   return (
@@ -14,9 +25,32 @@ const Homepage = () => {
         borderRadius="lg"
         borderWidth="1px"
       >
-        <Text fontSize="4xl" fontFamily="Work sans">
+        <Text fontSize="4xl" fontFamily="Work sans" color="black">
           Talk-A-Tive
         </Text>
+      </Box>
+      <Box
+        p={4}
+        bg="white"
+        w="100%"
+        borderRadius="lg"
+        borderWidth="1px"
+        color="black"
+      >
+        <Tabs variant="soft-rounded">
+          <TabList mb="1em">
+            <Tab width="50%">Login</Tab>
+            <Tab width="50%">Sign Up</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Login />
+            </TabPanel>
+            <TabPanel>
+              <Signup />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </Box>
     </Container>
   );
