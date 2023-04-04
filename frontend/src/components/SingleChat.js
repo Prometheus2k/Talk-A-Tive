@@ -42,7 +42,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     },
   };
 
-  const { selectedChat, setSelectedChat, user } = ChatState();
+  const { selectedChat, setSelectedChat, user, notification, setNotification } =
+    ChatState();
   const fetchMessages = async () => {
     if (!selectedChat) return;
 
@@ -59,7 +60,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         config,
       );
 
-      console.log(data);
+      // console.log(data);
       setMessages(data);
       setLoading(false);
       socket.emit("join chat", selectedChat._id);
@@ -88,6 +89,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
 
+  // console.log(notification, "-------------- ");
+
   const sendMessage = async (e) => {
     if (e.key === "Enter" && newMessage) {
       socket.emit("stop typing", selectedChat._id);
@@ -108,7 +111,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           },
           config,
         );
-        console.log(data);
+        // console.log(data);
         socket.emit("new message", data);
         setMessages([...messages, data]);
       } catch (error) {
@@ -130,9 +133,12 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageReceived.chat._id
       ) {
-        // give notification
-      } else {
-        setMessages([...messages, newMessageReceived]);
+        if (!notification.includes(newMessageReceived)) {
+          setNotification([newMessageReceived, ...notification]);
+          setFetchAgain(!fetchAgain);
+        } else {
+          setMessages([...messages, newMessageReceived]);
+        }
       }
     });
   });
