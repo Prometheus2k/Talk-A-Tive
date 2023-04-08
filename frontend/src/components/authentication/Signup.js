@@ -11,17 +11,20 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { ChatState } from "../../context/chatProvider";
 
 const Signup = () => {
   const [show, setShow] = useState(false);
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
-  const [pic, setPic] = useState();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [pic, setPic] = useState("");
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const history = useHistory();
+
+  const { setUser } = ChatState();
 
   const handleClick = () => setShow(!show);
 
@@ -30,7 +33,7 @@ const Signup = () => {
     if (pics === undefined) {
       toast({
         title: "Please Select an Image!",
-        status: "Warning",
+        status: "warning",
         duration: 5000,
         isClosable: true,
         position: "bottom",
@@ -59,8 +62,8 @@ const Signup = () => {
         });
     } else {
       toast({
-        title: "Please Select an Image!",
-        status: "Warning",
+        title: "Please Select an JPEG or PNG Image!",
+        status: "warning",
         duration: 5000,
         isClosable: true,
         position: "bottom",
@@ -74,7 +77,7 @@ const Signup = () => {
     if (!name || !email || !password || !confirmPassword) {
       toast({
         title: "Please fill all the fields!",
-        status: "Warning",
+        status: "warning",
         duration: 5000,
         isClosable: true,
         position: "bottom",
@@ -85,7 +88,7 @@ const Signup = () => {
     if (password !== confirmPassword) {
       toast({
         title: "Passwords do not match!",
-        status: "Warning",
+        status: "warning",
         duration: 5000,
         isClosable: true,
         position: "bottom",
@@ -108,7 +111,7 @@ const Signup = () => {
 
       toast({
         title: "Registration Successful!",
-        status: "Success",
+        status: "success",
         duration: 5000,
         isClosable: true,
         position: "bottom",
@@ -116,6 +119,8 @@ const Signup = () => {
 
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      setUser(userInfo);
       history.push("/chats");
     } catch (err) {
       toast({
