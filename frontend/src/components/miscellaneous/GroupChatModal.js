@@ -96,6 +96,7 @@ const GroupChatModal = ({ children }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
+      console.log(JSON.stringify(selectedUsers.map((u) => u._id)));
       const { data } = await axios.post(
         `/api/chat/group`,
         {
@@ -151,7 +152,7 @@ const GroupChatModal = ({ children }) => {
             </FormControl>
             <FormControl>
               <Input
-                placeholder="Add Users eg: John, Piyush, Jane"
+                placeholder="Add Users eg: Shone, Martho, Saniya"
                 mb={1}
                 onChange={(e) => handleSearch(e.target.value)}
               />
