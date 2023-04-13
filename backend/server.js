@@ -2,7 +2,6 @@ const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "./.env") });
 
 const express = require("express");
-const { chats } = require("./data/data");
 const connectDB = require("./config/db");
 const colors = require("colors");
 const userRoutes = require("./routes/userRoutes");
