@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "gec-talk-a-tive",
+  "name": "gec-talk-a-tive-backend",
   "builds": [{ "src": "app.js", "use": "@vercel/node" }],
   "routes": [{ "src": "/(.*)", "dest": "/app.js" }]
 }
